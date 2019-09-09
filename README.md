@@ -21,4 +21,10 @@
     + GitHub确认无误返回信息
     + 存入数据库，更新登录状态
 2. okhttp
+3.  + 首先用HttpServletRequest来获取一个session并赋值：            
+        request.getSession().setAttribute("user",user);
+
+    + 用thymleaf判断并获取session中的用户信息：th:if="${session.user == null}"
+4. 为了不用每次启动服务就得登录一次，存入数据库h2:嵌入项目
+
 
