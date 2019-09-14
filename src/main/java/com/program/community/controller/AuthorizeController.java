@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -44,7 +43,7 @@ public class AuthorizeController {
         accessTokenDto.setState(state);
         String  accessToken = gitHubProvider.getAccessToken(accessTokenDto);
         GitHubUser gitHubuser = gitHubProvider.getUser(accessToken);
-        if (gitHubuser != null){
+        if (gitHubuser != null && gitHubuser.getId() != null){
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
