@@ -2,13 +2,25 @@
 
 ##资料
 [Spring 文档](https://spring.io/guides)
+
 [Spring web文档](https://spring.io/guides/gs/serving-web-content/#scratch)
+
 [ES社区](https://elasticsearch.cn/explore)
+
 [Bootstrap 文档](https://v3.bootcss.com/css/#buttons)
+
 [Github OAuth](https://developer.github.com/apps/building-oauth-apps/)
+
+[Thymleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)
 
 ##工具
 [Git](https://www.git-scm.com/download/)
+
+[Lombok](https://projectlombok.org/setup/maven):使用的是@Data功能
+
+Flyway
+
+H2数据库
 
 #笔记
 ###登录
@@ -26,6 +38,7 @@
 
     + 用thymleaf判断并获取session中的用户信息：th:if="${session.user == null}"
 4. 为了不用每次启动服务就得登录一次，存入数据库h2:嵌入项目
+5.使用Flyway来执行对数据库的操作
 ---
 ###sql脚本
 ```sql
