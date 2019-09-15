@@ -18,6 +18,10 @@
 
 [Lombok](https://projectlombok.org/setup/maven):使用的是@Data功能
 
+[Livereload](http://livereload.com/):实时刷新html
+
+devtools:和上面结合使用
+
 Flyway
 
 H2数据库

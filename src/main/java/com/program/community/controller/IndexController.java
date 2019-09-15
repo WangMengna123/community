@@ -1,20 +1,17 @@
 package com.program.community.controller;
 
-import com.program.community.dto.QuestionDto;
-import com.program.community.mapper.QuestionMapper;
+import com.program.community.dto.PageDto;
 import com.program.community.mapper.UserMapper;
-import com.program.community.model.Question;
 import com.program.community.model.User;
 import com.program.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class IndexController {
@@ -24,7 +21,9 @@ public class IndexController {
     private QuestionService questionService;
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        Model model){
+                        Model model,
+                        @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                        @RequestParam(value = "pageSize",defaultValue = "2") Integer pageSize){
         Cookie[] cookies = request.getCookies();
         String token ;
         if (cookies != null && cookies.length != 0) {
@@ -39,8 +38,8 @@ public class IndexController {
                 }
             }
         }
-        List<QuestionDto> questionDtoList = questionService.list();
-        model.addAttribute("questionDtoList",questionDtoList);
+        PageDto pageDto = questionService.list(pageNum,pageSize);
+        model.addAttribute("pageDto",pageDto);
 
 
         return "index";

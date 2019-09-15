@@ -1,5 +1,6 @@
 package com.program.community.service;
 
+import com.program.community.dto.PageDto;
 import com.program.community.dto.QuestionDto;
 import com.program.community.mapper.QuestionMapper;
 import com.program.community.mapper.UserMapper;
@@ -19,8 +20,21 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<QuestionDto> list() {
-        List<Question> questionList = questionMapper.list();
+    public PageDto list(Integer pageNum, Integer pageSize) {
+        Integer totalCount = questionMapper.countQuestions();
+        PageDto pageDto = new PageDto();
+        pageDto.setPagination(totalCount,pageNum,pageSize);
+
+        if (pageNum < 1){
+            pageNum = 1;
+        }
+        if (pageNum > pageDto.getTotalPage()){
+            pageNum = pageDto.getTotalPage();
+        }
+
+
+        Integer offset = (pageNum - 1) * pageSize ;
+        List<Question> questionList = questionMapper.list(offset, pageSize);
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for(Question question :  questionList){
             User user =  userMapper.findUserById(question.getCreator());
@@ -29,6 +43,7 @@ public class QuestionService {
             questionDto.setUser(user);
             questionDtoList.add(questionDto);
         }
-        return questionDtoList;
+        pageDto.setQuestionDtosList(questionDtoList);
+        return pageDto;
     }
 }
