@@ -46,4 +46,31 @@ public class QuestionService {
         pageDto.setQuestionDtosList(questionDtoList);
         return pageDto;
     }
+
+    public PageDto searchQuestionsByUserId(Integer id, Integer pageNum, Integer pageSize) {
+        Integer totalCount = questionMapper.countQuestionsOfUserId(id);
+        PageDto pageDto = new PageDto();
+        pageDto.setPagination(totalCount,pageNum,pageSize);
+
+        if (pageNum < 1){
+            pageNum = 1;
+        }
+        if (pageNum > pageDto.getTotalPage()){
+            pageNum = pageDto.getTotalPage();
+        }
+
+
+        Integer offset = (pageNum - 1) * pageSize ;
+        List<Question> questionList = questionMapper.searchQuestionsByUserId(id,offset, pageSize);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for(Question question :  questionList){
+            User user =  userMapper.findUserById(question.getCreator());
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(question,questionDto);
+            questionDto.setUser(user);
+            questionDtoList.add(questionDto);
+        }
+        pageDto.setQuestionDtosList(questionDtoList);
+        return pageDto;
+    }
 }
