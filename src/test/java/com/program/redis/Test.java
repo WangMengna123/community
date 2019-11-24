@@ -14,6 +14,7 @@ public class Test {
         int port = 6379;
         //lalalalalala
         //lqqqqqqqqqq
+        //44444444444
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(10);
         poolConfig.setMaxIdle(5);
