@@ -24,7 +24,6 @@ public class QuestionService {
         Integer totalCount = questionMapper.countQuestions();
         PageDto pageDto = new PageDto();
         pageDto.setPagination(totalCount,pageNum,pageSize);
-
         if (pageNum < 1){
             pageNum = 1;
         }
